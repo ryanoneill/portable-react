@@ -1,0 +1,19 @@
+{
+  "name": "npm",
+  "version": "1.0.0",
+  "description": "Portable React Example",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanoneill/portable-react.git"
+  },
+  "author": "Ryan O'Neill <ryanoneill@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ryanoneill/portable-react/issues"
+  },
+  "homepage": "https://github.com/ryanoneill/portable-react#readme"
+}
