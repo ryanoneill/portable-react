@@ -20,7 +20,9 @@
     "alt": "^0.16.7",
     "iso": "^4.1.0",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "superagent": "^1.2.0",
+    "superagent-oauth": "^0.2.3"
   },
   "devDependencies": {
     "browserify": "^10.2.3",
