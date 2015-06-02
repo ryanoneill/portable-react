@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/ryanoneill/portable-react/issues"
   },
-  "homepage": "https://github.com/ryanoneill/portable-react#readme"
+  "homepage": "https://github.com/ryanoneill/portable-react#readme",
+  "dependencies": {
+    "alt": "^0.16.7",
+    "iso": "^4.1.0",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
+  }
 }
