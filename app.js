@@ -9,17 +9,29 @@ var routes = require('./src/routes');
 var alt = require('./src/alt');
 var twitterApi = require('./src/twitter-api');
 
+var buildBootstrapData = function (handler, data) {
+  var storeData = {};
+  storeData[handler.getDataName()] = data;
+  var store = {};
+  store[handler.getStoreName()] = storeData;
+  return JSON.stringify(store);
+};
+
 var server = http.createServer(function (request, response) {
-  twitterApi.getTweet('605608462622420992')
-    .then(function (data) {
+  Router.run(routes, request.url, function (Handler, state) {
+    var handler = state.routes[0].handler;
+    handler.fetchData(state.params).then(function (data) {
+      alt.bootstrap(buildBootstrapData(handler, data));
+      var content = React.renderToString(React.createElement(Handler));
+
       var iso = new Iso();
-      alt.bootstrap(JSON.stringify({ TweetStore: { tweet: data.body } }));
-      Router.run(routes, request.url, function (Handler) {
-        var content = React.renderToString(React.createElement(Handler));
-        iso.add(content, alt.flush());
-        response.end(iso.render());
-      });
+      iso.add(content, alt.flush());
+
+      response.end(iso.render());
+    }).catch(function () {
+      response.end('error occurred');
     });
+  });
 });
 
 server.listen(8080);

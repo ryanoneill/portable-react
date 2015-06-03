@@ -17,16 +17,16 @@ var oauth = new OAuth.OAuth(
 
 var API = 'https://api.twitter.com/1.1';
 
-var getTweet = function (id) {
+var getTweet = function (tweetId) {
   return new Promise(function (resolve, reject) {
-    var url = API + '/statuses/show/' + id + '.json';
+    var url = API + '/statuses/show/' + tweetId + '.json';
     superagent.get(url)
       .sign(oauth, keys.token, keys.secret)
       .end(function (err, result) {
         if (err) {
           reject(err);
         } else {
-          resolve(result);
+          resolve(result.body);
         }
       });
   });
