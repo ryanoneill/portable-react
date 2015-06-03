@@ -20,7 +20,23 @@ var Tweet = React.createClass({
   },
 
   render() {
-    return <div>{this.state.tweet.text}</div>
+    return (
+      <div className="tweet">
+        <div className="user">
+          <img className="avatar" src={this.state.tweet.user.profile_image_url} />
+          <div className="info">
+            <div className="name">
+              {this.state.tweet.user.name}
+            </div>
+            <div className="screen_name">
+              @{this.state.tweet.user.screen_name}
+            </div>
+          </div>
+        </div>
+        <p className="text">{this.state.tweet.text}</p>
+      </div>
+    )
+    // return <div>{this.state.tweet.text}</div>;
   }
 });
 
