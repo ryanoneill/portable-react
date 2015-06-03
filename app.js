@@ -7,7 +7,6 @@ var Iso = require('iso');
 
 var routes = require('./src/routes');
 var alt = require('./src/alt');
-var twitterApi = require('./src/twitter-api');
 
 var buildBootstrapData = function (handler, data) {
   var storeData = {};
@@ -18,23 +17,31 @@ var buildBootstrapData = function (handler, data) {
 };
 
 var getPageHandler = function (state) {
-  return state.routes[1].handler; // 0 is the root
+  if (state.routes.length >= 2) {
+    return state.routes[1].handler; // 0 is the root
+  } else {
+    return undefined;
+  }
 };
 
 var server = http.createServer(function (request, response) {
   Router.run(routes, request.url, function (Handler, state) {
     var handler = getPageHandler(state);
-    handler.fetchData(state.params).then(function (data) {
-      alt.bootstrap(buildBootstrapData(handler, data));
-      var content = React.renderToString(React.createElement(Handler));
+    if (handler) {
+      handler.fetchData(state.params).then(function (data) {
+        alt.bootstrap(buildBootstrapData(handler, data));
+        var content = React.renderToString(React.createElement(Handler));
 
-      var iso = new Iso();
-      iso.add(content, alt.flush());
+        var iso = new Iso();
+        iso.add(content, alt.flush());
 
-      response.end(iso.render());
-    }).catch(function () {
-      response.end('error occurred');
-    });
+        response.end(iso.render());
+      }).catch(function () {
+        response.end('error occurred');
+      });
+    } else {
+      response.end('unknown route');
+    }
   });
 });
 
