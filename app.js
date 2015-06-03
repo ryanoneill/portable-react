@@ -17,9 +17,13 @@ var buildBootstrapData = function (handler, data) {
   return JSON.stringify(store);
 };
 
+var getPageHandler = function (state) {
+  return state.routes[1].handler; // 0 is the root
+};
+
 var server = http.createServer(function (request, response) {
   Router.run(routes, request.url, function (Handler, state) {
-    var handler = state.routes[0].handler;
+    var handler = getPageHandler(state);
     handler.fetchData(state.params).then(function (data) {
       alt.bootstrap(buildBootstrapData(handler, data));
       var content = React.renderToString(React.createElement(Handler));

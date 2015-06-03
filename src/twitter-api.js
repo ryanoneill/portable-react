@@ -17,9 +17,8 @@ var oauth = new OAuth.OAuth(
 
 var API = 'https://api.twitter.com/1.1';
 
-var getTweet = function (tweetId) {
+var getPromise = function (url) {
   return new Promise(function (resolve, reject) {
-    var url = API + '/statuses/show/' + tweetId + '.json';
     superagent.get(url)
       .sign(oauth, keys.token, keys.secret)
       .end(function (err, result) {
@@ -32,6 +31,17 @@ var getTweet = function (tweetId) {
   });
 };
 
+var getUser = function (username) {
+  var url = API + '/users/show.json?screen_name=' + username;
+  return getPromise(url);
+};
+
+var getTweet = function (tweetId) {
+  var url = API + '/statuses/show/' + tweetId + '.json';
+  return getPromise(url);
+};
+
 module.exports = {
-  getTweet: getTweet
+  getTweet: getTweet,
+  getUser: getUser
 };

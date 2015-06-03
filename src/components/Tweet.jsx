@@ -36,7 +36,6 @@ var Tweet = React.createClass({
         <p className="text">{this.state.tweet.text}</p>
       </div>
     )
-    // return <div>{this.state.tweet.text}</div>;
   }
 });
 
